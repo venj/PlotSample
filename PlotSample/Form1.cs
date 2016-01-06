@@ -22,7 +22,8 @@ namespace PlotSample
             var Plot = new OxyPlot.WindowsForms.PlotView();
             Plot.Model = new PlotModel();
             Plot.Dock = DockStyle.Fill;
-            this.Controls.Add(Plot);
+            this.plotBox.Controls.Add(Plot);
+            //this.Controls.Add(Plot);
 
             Plot.Model.PlotType = PlotType.XY;
             Plot.Model.Background = OxyColor.FromRgb(255, 255, 255);

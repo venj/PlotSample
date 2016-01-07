@@ -44,7 +44,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(697, 431);
+            this.ClientSize = new System.Drawing.Size(419, 321);
             this.Controls.Add(this.plotBox);
             this.Name = "Form1";
             this.Text = "Form1";

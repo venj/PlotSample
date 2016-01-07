@@ -18,6 +18,7 @@ namespace PlotSample
     {
         private System.Timers.Timer aTimer;
         OxyPlot.WindowsForms.PlotView Plot = new OxyPlot.WindowsForms.PlotView();
+        OxyPlot.Axes.LinearAxis axis1 = new LinearAxis();
 
         public Form1()
         {
@@ -32,9 +33,7 @@ namespace PlotSample
             Plot.Model.PlotType = PlotType.XY;
             Plot.Model.Background = OxyColor.FromRgb(255, 255, 255);
             Plot.Model.TextColor = OxyColor.FromRgb(0, 0, 0);
-
-
-            var axis1 = new LinearAxis();
+            
             axis1.Position = AxisPosition.Bottom;
             axis1.Minimum = 0.0;
             axis1.Maximum = 10.0;
@@ -45,24 +44,7 @@ namespace PlotSample
             axis2.Minimum = 0.0;
             axis2.Maximum = 10.0;
             Plot.Model.Axes.Add(axis2);
-            SetTimer();
-        }
 
-        private void SetTimer()
-        {
-            // Create a timer with a two second interval.
-            aTimer = new System.Timers.Timer(5000);
-            // Hook up the Elapsed event for the timer. 
-            aTimer.Elapsed += OnTimedEvent;
-            aTimer.AutoReset = true;
-            aTimer.Enabled = true;
-        }
-
-        private void OnTimedEvent(Object source, ElapsedEventArgs e)
-        {
-            Console.WriteLine("The Elapsed event was raised at {0:HH:mm:ss.fff}",
-                              e.SignalTime);
-            
             // Create Line series
             var s1 = new LineSeries { Title = "LineSeries", StrokeThickness = 1 };
             s1.Points.Add(new DataPoint(2, 7));
@@ -71,10 +53,31 @@ namespace PlotSample
 
             // add Series and Axis to plot model
             Plot.Model.Series.Add(s1);
-            Plot.Model.InvalidatePlot(true);
+            
+            // Timer for dynamic test.
+            SetTimer();
         }
 
+        private void SetTimer()
+        {
+            // Create a timer with a two second interval.
+            aTimer = new System.Timers.Timer(1000);
+            // Hook up the Elapsed event for the timer. 
+            aTimer.Elapsed += OnTimedEvent;
+            aTimer.AutoReset = true;
+            aTimer.Enabled = true;
+        }
 
-
+        private void OnTimedEvent(Object source, ElapsedEventArgs e)
+        {
+            // Change axis
+            Plot.Model.InvalidatePlot(true);
+            axis1.Maximum += 1;
+            if (axis1.Maximum == 30)
+            {
+                aTimer.Stop();
+                aTimer?.Dispose();
+            }
+        }
     }
 }
